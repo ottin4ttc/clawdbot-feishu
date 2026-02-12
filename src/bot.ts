@@ -849,19 +849,23 @@ export async function handleFeishuMessage(params: {
           cfg,
           runtime,
           senderOpenId: ctx.senderOpenId,
+          senderName: ctx.senderName,
           dynamicCfg,
           accountId: account.accountId,
           log: (msg) => log(msg),
         });
+        // Always use the fresh config from disk for route resolution.
+        // The monitor captures `cfg` once at startup, so it never contains
+        // bindings created by dynamic agent creation. Re-resolve every time
+        // to pick up existing bindings (created === false) as well as new ones.
+        effectiveCfg = result.updatedCfg;
+        route = core.channel.routing.resolveAgentRoute({
+          cfg: result.updatedCfg,
+          channel: "feishu",
+          accountId: account.accountId,
+          peer: { kind: "direct", id: ctx.senderOpenId },
+        });
         if (result.created) {
-          effectiveCfg = result.updatedCfg;
-          // Re-resolve route with updated config
-          route = core.channel.routing.resolveAgentRoute({
-            cfg: result.updatedCfg,
-            channel: "feishu",
-            accountId: account.accountId,
-            peer: { kind: "direct", id: ctx.senderOpenId },
-          });
           log(`feishu[${account.accountId}]: dynamic agent created, new route: ${route.sessionKey}`);
         }
       }
