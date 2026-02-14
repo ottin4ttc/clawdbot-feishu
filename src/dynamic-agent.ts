@@ -43,6 +43,7 @@ export function maybeCreateDynamicAgent(params: {
   senderOpenId: string;
   senderName?: string;
   dynamicCfg: DynamicAgentCreationConfig;
+  accountId?: string;
   log: (msg: string) => void;
 }): Promise<MaybeCreateDynamicAgentResult> {
   return withCreateLock(() => doCreateDynamicAgent(params));
@@ -54,9 +55,10 @@ async function doCreateDynamicAgent(params: {
   senderOpenId: string;
   senderName?: string;
   dynamicCfg: DynamicAgentCreationConfig;
+  accountId?: string;
   log: (msg: string) => void;
 }): Promise<MaybeCreateDynamicAgentResult> {
-  const { runtime, senderOpenId, senderName, dynamicCfg, log } = params;
+  const { runtime, senderOpenId, senderName, dynamicCfg, accountId, log } = params;
 
   // Re-read config inside the lock to avoid stale-snapshot races.
   // The caller's `cfg` may already be outdated if another agent was created concurrently.

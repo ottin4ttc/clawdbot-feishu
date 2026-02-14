@@ -717,6 +717,7 @@ export async function handleFeishuMessage(params: {
           senderOpenId: ctx.senderOpenId,
           senderName: ctx.senderName,
           dynamicCfg,
+          accountId: account.accountId,
           log: (msg) => log(msg),
         });
         // Always use the fresh config from disk for route resolution.
