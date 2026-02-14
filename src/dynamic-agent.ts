@@ -58,7 +58,7 @@ async function doCreateDynamicAgent(params: {
   accountId?: string;
   log: (msg: string) => void;
 }): Promise<MaybeCreateDynamicAgentResult> {
-  const { runtime, senderOpenId, senderName, dynamicCfg, log } = params;
+  const { runtime, senderOpenId, senderName, dynamicCfg, accountId, log } = params;
 
   // Re-read config inside the lock to avoid stale-snapshot races.
   // The caller's `cfg` may already be outdated if another agent was created concurrently.
