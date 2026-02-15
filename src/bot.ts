@@ -936,6 +936,7 @@ export async function handleFeishuMessage(params: {
       CommandAuthorized: commandAuthorized,
       OriginatingChannel: "feishu" as const,
       OriginatingTo: feishuTo,
+      ReplyToBody: quotedContent,
       ...mediaPayload,
     });
 
