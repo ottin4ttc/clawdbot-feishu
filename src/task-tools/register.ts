@@ -30,8 +30,6 @@ import {
   type AddTasklistMembersParams,
   CreateSubtaskSchema,
   type CreateSubtaskParams,
-  CreateTaskCommentSchema,
-  type CreateTaskCommentParams,
   CreateTaskSchema,
   type CreateTaskParams,
   CreateTasklistSchema,
@@ -242,47 +240,42 @@ export function registerFeishuTaskTools(api: OpenClawPluginApi) {
     label: "Feishu Task Subtask Create",
     description: "Create a Feishu subtask under a parent task (task v2)",
     parameters: CreateSubtaskSchema,
-    run: (client, params) => createSubtask(client, params),
+    run: async ({ client }, params) => createSubtask(client, params),
   });
 
-  registerTaskTool<CreateTaskCommentParams>(api, {
-    name: "feishu_task_comment_create",
-    label: "Feishu Task Comment Create",
-    description: "Create a comment for a Feishu task (task v2)",
-    parameters: CreateTaskCommentSchema,
-    run: (client, params) => createTaskComment(client, params),
+  registerTaskTool<UploadTaskAttachmentParams>(api, {
+    name: "feishu_task_attachment_upload",
+    label: "Feishu Task Attachment Upload",
+    description: "Upload an attachment to a Feishu task (task v2)",
+    parameters: UploadTaskAttachmentSchema,
+    run: async ({ client, account }, params) => {
+      const mediaMaxBytes = (account.config?.mediaMaxMb ?? DEFAULT_TASK_MEDIA_MAX_MB) * BYTES_PER_MEGABYTE;
+      return uploadTaskAttachment(client, params, { maxBytes: mediaMaxBytes });
+    },
   });
 
-  registerTaskTool<ListTaskCommentsParams>(api, {
-    name: "feishu_task_comment_list",
-    label: "Feishu Task Comment List",
-    description: "List comments for a Feishu task (task v2)",
-    parameters: ListTaskCommentsSchema,
-    run: (client, params) => listTaskComments(client, params),
+  registerTaskTool<ListTaskAttachmentsParams>(api, {
+    name: "feishu_task_attachment_list",
+    label: "Feishu Task Attachment List",
+    description: "List attachments for a Feishu task (task v2)",
+    parameters: ListTaskAttachmentsSchema,
+    run: async ({ client }, params) => listTaskAttachments(client, params),
   });
 
-  registerTaskTool<GetTaskCommentParams>(api, {
-    name: "feishu_task_comment_get",
-    label: "Feishu Task Comment Get",
-    description: "Get a Feishu task comment by comment_id (task v2)",
-    parameters: GetTaskCommentSchema,
-    run: (client, params) => getTaskComment(client, params),
+  registerTaskTool<GetTaskAttachmentParams>(api, {
+    name: "feishu_task_attachment_get",
+    label: "Feishu Task Attachment Get",
+    description: "Get a Feishu task attachment by attachment_guid (task v2)",
+    parameters: GetTaskAttachmentSchema,
+    run: async ({ client }, params) => getTaskAttachment(client, params),
   });
 
-  registerTaskTool<UpdateTaskCommentParams>(api, {
-    name: "feishu_task_comment_update",
-    label: "Feishu Task Comment Update",
-    description: "Update a Feishu task comment by comment_id (task v2 patch)",
-    parameters: UpdateTaskCommentSchema,
-    run: (client, params) => updateTaskComment(client, params),
-  });
-
-  registerTaskTool<DeleteTaskCommentParams>(api, {
-    name: "feishu_task_comment_delete",
-    label: "Feishu Task Comment Delete",
-    description: "Delete a Feishu task comment by comment_id (task v2)",
-    parameters: DeleteTaskCommentSchema,
-    run: (client, params) => deleteTaskComment(client, params),
+  registerTaskTool<DeleteTaskAttachmentParams>(api, {
+    name: "feishu_task_attachment_delete",
+    label: "Feishu Task Attachment Delete",
+    description: "Delete a Feishu task attachment by attachment_guid (task v2)",
+    parameters: DeleteTaskAttachmentSchema,
+    run: async ({ client }, params) => deleteTaskAttachment(client, params),
   });
 
   registerTaskTool<DeleteTaskParams>(api, {

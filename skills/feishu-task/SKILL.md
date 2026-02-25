@@ -219,42 +219,23 @@ Tasklists support three roles: owner (read/edit/manage), editor (read/edit), vie
 }
 ```
 
-## List Comments
+## Upload Attachment (file_path)
 
 ```json
 {
   "task_guid": "e297ddff-06ca-4166-b917-4ce57cd3a7a0",
-  "page_size": 50,
+  "file_path": "/path/to/report.pdf",
   "user_id_type": "open_id"
 }
 ```
 
-## Get Comment
+## Upload Attachment (file_url)
 
 ```json
 {
-  "comment_id": "7088226436635389954",
+  "task_guid": "e297ddff-06ca-4166-b917-4ce57cd3a7a0",
+  "file_url": "https://oss-example.com/bucket/report.pdf",
+  "filename": "report.pdf",
   "user_id_type": "open_id"
-}
-```
-
-## Update Comment
-
-```json
-{
-  "comment_id": "7088226436635389954",
-  "comment": {
-    "content": "Updated comment content"
-  },
-  "update_fields": ["content"],
-  "user_id_type": "open_id"
-}
-```
-
-## Delete Comment
-
-```json
-{
-  "comment_id": "7088226436635389954"
 }
 ```
