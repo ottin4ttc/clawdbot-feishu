@@ -30,6 +30,8 @@ import {
   type AddTasklistMembersParams,
   CreateSubtaskSchema,
   type CreateSubtaskParams,
+  CreateTaskCommentSchema,
+  type CreateTaskCommentParams,
   CreateTaskSchema,
   type CreateTaskParams,
   CreateTasklistSchema,
@@ -241,6 +243,46 @@ export function registerFeishuTaskTools(api: OpenClawPluginApi) {
     description: "Create a Feishu subtask under a parent task (task v2)",
     parameters: CreateSubtaskSchema,
     run: (client, params) => createSubtask(client, params),
+  });
+
+  registerTaskTool<CreateTaskCommentParams>(api, {
+    name: "feishu_task_comment_create",
+    label: "Feishu Task Comment Create",
+    description: "Create a comment for a Feishu task (task v2)",
+    parameters: CreateTaskCommentSchema,
+    run: (client, params) => createTaskComment(client, params),
+  });
+
+  registerTaskTool<ListTaskCommentsParams>(api, {
+    name: "feishu_task_comment_list",
+    label: "Feishu Task Comment List",
+    description: "List comments for a Feishu task (task v2)",
+    parameters: ListTaskCommentsSchema,
+    run: (client, params) => listTaskComments(client, params),
+  });
+
+  registerTaskTool<GetTaskCommentParams>(api, {
+    name: "feishu_task_comment_get",
+    label: "Feishu Task Comment Get",
+    description: "Get a Feishu task comment by comment_id (task v2)",
+    parameters: GetTaskCommentSchema,
+    run: (client, params) => getTaskComment(client, params),
+  });
+
+  registerTaskTool<UpdateTaskCommentParams>(api, {
+    name: "feishu_task_comment_update",
+    label: "Feishu Task Comment Update",
+    description: "Update a Feishu task comment by comment_id (task v2 patch)",
+    parameters: UpdateTaskCommentSchema,
+    run: (client, params) => updateTaskComment(client, params),
+  });
+
+  registerTaskTool<DeleteTaskCommentParams>(api, {
+    name: "feishu_task_comment_delete",
+    label: "Feishu Task Comment Delete",
+    description: "Delete a Feishu task comment by comment_id (task v2)",
+    parameters: DeleteTaskCommentSchema,
+    run: (client, params) => deleteTaskComment(client, params),
   });
 
   registerTaskTool<DeleteTaskParams>(api, {

@@ -208,3 +208,53 @@ Tasklists support three roles: owner (read/edit/manage), editor (read/edit), vie
   "user_id_type": "open_id"
 }
 ```
+
+## Create Comment
+
+```json
+{
+  "task_guid": "e297ddff-06ca-4166-b917-4ce57cd3a7a0",
+  "content": "Looks good to me",
+  "user_id_type": "open_id"
+}
+```
+
+## List Comments
+
+```json
+{
+  "task_guid": "e297ddff-06ca-4166-b917-4ce57cd3a7a0",
+  "page_size": 50,
+  "user_id_type": "open_id"
+}
+```
+
+## Get Comment
+
+```json
+{
+  "comment_id": "7088226436635389954",
+  "user_id_type": "open_id"
+}
+```
+
+## Update Comment
+
+```json
+{
+  "comment_id": "7088226436635389954",
+  "comment": {
+    "content": "Updated comment content"
+  },
+  "update_fields": ["content"],
+  "user_id_type": "open_id"
+}
+```
+
+## Delete Comment
+
+```json
+{
+  "comment_id": "7088226436635389954"
+}
+```

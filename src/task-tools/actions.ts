@@ -9,6 +9,7 @@ import {
   type AddTasklistMembersParams,
   type CreateTasklistParams,
   CreateSubtaskParams,
+  CreateTaskCommentParams,
   CreateTaskParams,
   DeleteTaskAttachmentParams,
   GetTaskAttachmentParams,
@@ -64,6 +65,12 @@ function ensureSupportedUpdateFields(
 function inferTasklistUpdateFields(tasklist: TasklistPatchTasklist): string[] {
   return Object.keys(tasklist).filter((field) =>
     SUPPORTED_TASKLIST_PATCH_FIELDS.has(field),
+  );
+}
+
+function inferCommentUpdateFields(comment: TaskCommentPatchComment): string[] {
+  return Object.keys(comment).filter((field) =>
+    SUPPORTED_COMMENT_PATCH_FIELDS.has(field as keyof TaskCommentPatchComment),
   );
 }
 
