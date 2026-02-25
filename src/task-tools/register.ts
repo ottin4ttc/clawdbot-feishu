@@ -235,6 +235,14 @@ export function registerFeishuTaskTools(api: OpenClawPluginApi) {
     run: async ({ client }, params) => deleteTaskAttachment(client, params),
   });
 
+  registerTaskTool<CreateSubtaskParams>(api, {
+    name: "feishu_task_subtask_create",
+    label: "Feishu Task Subtask Create",
+    description: "Create a Feishu subtask under a parent task (task v2)",
+    parameters: CreateSubtaskSchema,
+    run: (client, params) => createSubtask(client, params),
+  });
+
   registerTaskTool<DeleteTaskParams>(api, {
     name: "feishu_task_delete",
     label: "Feishu Task Delete",
