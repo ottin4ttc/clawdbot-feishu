@@ -11,6 +11,7 @@ import { createFeishuWSClient, createEventDispatcher } from "./client.js";
 import { resolveFeishuAccount, listEnabledFeishuAccounts } from "./accounts.js";
 import { handleFeishuMessage, type FeishuMessageEvent, type FeishuBotAddedEvent } from "./bot.js";
 import { probeFeishu } from "./probe.js";
+import { getFeishuRuntime } from "./runtime.js";
 
 export type MonitorFeishuOpts = {
   config?: ClawdbotConfig;
@@ -60,8 +61,11 @@ function registerEventHandlers(
     "im.message.receive_v1": async (data) => {
       try {
         const event = data as unknown as FeishuMessageEvent;
+        // Reload config per-message so model/imageModel changes take effect
+        // without restarting the gateway.
+        const freshCfg = getFeishuRuntime().config.loadConfig();
         const promise = handleFeishuMessage({
-          cfg,
+          cfg: freshCfg,
           event,
           botOpenId: botOpenIds.get(accountId),
           runtime,
