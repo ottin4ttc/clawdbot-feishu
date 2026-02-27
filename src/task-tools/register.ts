@@ -235,49 +235,6 @@ export function registerFeishuTaskTools(api: OpenClawPluginApi) {
     run: async ({ client }, params) => deleteTaskAttachment(client, params),
   });
 
-  registerTaskTool<CreateSubtaskParams>(api, {
-    name: "feishu_task_subtask_create",
-    label: "Feishu Task Subtask Create",
-    description: "Create a Feishu subtask under a parent task (task v2)",
-    parameters: CreateSubtaskSchema,
-    run: async ({ client }, params) => createSubtask(client, params),
-  });
-
-  registerTaskTool<UploadTaskAttachmentParams>(api, {
-    name: "feishu_task_attachment_upload",
-    label: "Feishu Task Attachment Upload",
-    description: "Upload an attachment to a Feishu task (task v2)",
-    parameters: UploadTaskAttachmentSchema,
-    run: async ({ client, account }, params) => {
-      const mediaMaxBytes = (account.config?.mediaMaxMb ?? DEFAULT_TASK_MEDIA_MAX_MB) * BYTES_PER_MEGABYTE;
-      return uploadTaskAttachment(client, params, { maxBytes: mediaMaxBytes });
-    },
-  });
-
-  registerTaskTool<ListTaskAttachmentsParams>(api, {
-    name: "feishu_task_attachment_list",
-    label: "Feishu Task Attachment List",
-    description: "List attachments for a Feishu task (task v2)",
-    parameters: ListTaskAttachmentsSchema,
-    run: async ({ client }, params) => listTaskAttachments(client, params),
-  });
-
-  registerTaskTool<GetTaskAttachmentParams>(api, {
-    name: "feishu_task_attachment_get",
-    label: "Feishu Task Attachment Get",
-    description: "Get a Feishu task attachment by attachment_guid (task v2)",
-    parameters: GetTaskAttachmentSchema,
-    run: async ({ client }, params) => getTaskAttachment(client, params),
-  });
-
-  registerTaskTool<DeleteTaskAttachmentParams>(api, {
-    name: "feishu_task_attachment_delete",
-    label: "Feishu Task Attachment Delete",
-    description: "Delete a Feishu task attachment by attachment_guid (task v2)",
-    parameters: DeleteTaskAttachmentSchema,
-    run: async ({ client }, params) => deleteTaskAttachment(client, params),
-  });
-
   registerTaskTool<DeleteTaskParams>(api, {
     name: "feishu_task_delete",
     label: "Feishu Task Delete",
